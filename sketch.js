@@ -22,35 +22,65 @@ function setup() {
   fourierX.sort((a, b) => b.amp - a.amp);
 }
 
+
 function epicycles(x, y, rotation, fourier) {
+
   for (let i = 0; i < fourier.length; i++) {
     let prevx = x;
     let prevy = y;
     let freq = fourier[i].freq;
     let radius = fourier[i].amp;
     let phase = fourier[i].phase;
+
     x += radius * cos(freq * time + phase + rotation);
     y += radius * sin(freq * time + phase + rotation);
 
-    stroke(0, 100);
+
+    stroke(0, 0, 0, 10);
     noFill();
     ellipse(prevx, prevy, radius * 2);
-    stroke(0);
+    stroke(255, 255, 255, 0);
     line(prevx, prevy, x, y);
+
   }
   return createVector(x, y);
 }
 
+
+function pythagorean_theorem(x, y) {
+  if ((typeof x !== 'number') || (typeof y !== 'number')) 
+return false; 
+		return Math.sqrt(x * x + y * y);
+  }
+  
+
 function draw() {
-  background(255);
+  background(245, 215, 243);
 
   let v = epicycles(width / 2, height / 2, 0, fourierX);
   path.unshift(v);
 
-  beginShape();
+  beginShape(TRIANGLE_STRIP);
   noFill();
+
+  var x_before = path[0].x;
+  var y_before = path[0].y;
   for (let i = 0; i < path.length; i++) {
-    vertex(path[i].x, path[i].y);
+    x = path[i].x;
+    y = path[i].y;
+
+    dist = pythagorean_theorem(x-x_before, y-y_before);
+    if (dist < 9) {
+      stroke(59, 173, 89);
+    } else {
+      stroke(0, 0, 0, 0);
+    }
+
+    vertex(x, y);
+
+    x_before = x;
+    y_before = y;
+
   }
   endShape();
 
@@ -59,7 +89,7 @@ function draw() {
 
   if (time > TWO_PI) {
     time = 0;
-    path = [];
+    //path = [];
   }
 }
 
