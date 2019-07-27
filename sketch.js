@@ -13,7 +13,7 @@ let path = [];
 
 function setup() {
   createCanvas(800, 600);
-  const skip = 1;
+  const skip = 8;
   for (let i = 0; i < drawing.length; i += skip) {
     const c = new Complex(drawing[i].x, drawing[i].y);
     x.push(c);
