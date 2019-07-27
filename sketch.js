@@ -32,17 +32,17 @@ function epicycles(x, y, rotation, fourier) {
     x += radius * cos(freq * time + phase + rotation);
     y += radius * sin(freq * time + phase + rotation);
 
-    stroke(150, 100);
+    stroke(0, 100);
     noFill();
     ellipse(prevx, prevy, radius * 2);
-    stroke(255);
+    stroke(0);
     line(prevx, prevy, x, y);
   }
   return createVector(x, y);
 }
 
 function draw() {
-  background(0);
+  background(255);
 
   let v = epicycles(width / 2, height / 2, 0, fourierX);
   path.unshift(v);
